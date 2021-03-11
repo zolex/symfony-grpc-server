@@ -52,9 +52,9 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 * create a service class in `src\Services` that extends your generated Interface
 * register your service with the gRPC server in `config/services.yaml`
 
-### Extenx the containers
+### Extend the containers
 
-If you need additional system dependencies, it's a good idea to create a new Dockerile based on one of the existing images. *If you prefer, you can also build everything from scratch, but please do not change the existing Dockerfiles.*
+If you need additional system dependencies, it's a good idea to create a new Dockerfile based on one of the existing images. *If you prefer, you can also build everything from scratch, but please do not change the existing Dockerfiles.*
 
 ```Dockerfile
 FROM zolex/grpc-php-server:0.0.1
