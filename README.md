@@ -1,13 +1,13 @@
 # Symfony gRPC PHP Server
 
 This project utilizes `spiral/roadrunner` and `spiral/grpc-php` to run a gRPC server in PHP.
-Everything is integreated with `symfony/framework-bundle` and `symfony/flex` so you can easily extend the project like every other symfony projecet (e.g. with orm-pack, logger, etc.)
+Everything is integreated with `symfony/framework-bundle` and `symfony/flex` so you can easily extend the project like every other symfony project (e.g. with orm-pack, logger, etc.)
 
 ## Project Structure
 
 There are three pre-built docker images. `protoc` for generating php code, `server` to run it and optionally `client` to run the example client commands (If you like you can also build them yourself, but it takes some time. check docker-compose.yaml)
 
-The server's enetrypoint is a minimal custom roadrunner binary, created from the sources in `/rr`.
+The server's entrypoint is a minimal custom roadrunner binary, created from the sources in `/rr`.
 
 Protocol Buffer Definitions are located in `/proto`. Generated PHP code will go in `/grpc` and must not be commited (It's already ignored).
 
@@ -15,7 +15,7 @@ Roadrunner's gRPC plugin needs to know the proto files for all registered servic
 
 Spiral's gRPC PHP server and the gRPC services are registered as symfony services in `config/services.yaml`.
 
-Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel to enable all the symfony features and then serves spiral's gRPC worker.
+Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel to enable all the symfony features and serves spiral's gRPC worker.
 
 
 ## Run the examples
