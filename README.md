@@ -1,4 +1,4 @@
-# Symfony gRPC PHP Server
+# Symfony gRPC Server
 
 This project utilizes `spiral/roadrunner` and `spiral/grpc-php` to run a gRPC server in PHP.
 Everything is integreated with `symfony/framework-bundle` and `symfony/flex` so you can easily extend the project like every other symfony project (e.g. with orm-pack, logger, etc.)
