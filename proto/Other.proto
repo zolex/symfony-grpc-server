@@ -1,0 +1,19 @@
+syntax="proto3";
+
+package Modix.Grpc.Other;
+
+option php_namespace="Modix\\Grpc\\Other";
+option php_metadata_namespace="Modix\\Grpc\\Other";
+
+message MultiplyArgs {
+  int32 a = 1;
+  int32 b = 2;
+}
+
+message MultiplyResult {
+  int32 result = 1;
+}
+
+service Other {
+  rpc multiply(MultiplyArgs) returns (MultiplyResult);
+}

@@ -1,0 +1,18 @@
+rpc:
+  enable: false
+
+metric:
+  enable: false
+
+# grpc service configuration.
+grpc:
+  listen: tcp://:3886
+  proto: "config/services.proto"
+  workers.command: "php bin/worker.php"
+  #tls.key:  "config/tls/app.key"
+  #tls.cert: "config/tls/app.crt"
+
+# control the max memory usage
+limit:
+  services:
+    grpc.maxMemory: 100
