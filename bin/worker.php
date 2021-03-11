@@ -8,18 +8,11 @@ if (!file_exists("vendor/autoload.php")) {
     exec('composer install');
 }
 
-use Spiral\Goridge\StreamRelay;
-use Spiral\RoadRunner\Worker;
-use Symfony\Component\Dotenv\Dotenv;
-
-require "vendor/autoload.php";
-
-(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+require dirname(__DIR__).'/config/bootstrap.php';
 
 $kernel = new \App\Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $kernel->boot();
 
-$server = $kernel->getContainer()->get('Spiral\GRPC\Server');
-$relay = new StreamRelay(STDIN, STDOUT);
-$worker = new Worker($relay);
-$server->serve($worker);
+// just get it from the container so it will be autowired
+// according to services.yaml and start serving the worker
+$kernel->getContainer()->get('Spiral\GRPC\Server');
