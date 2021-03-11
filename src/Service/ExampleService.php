@@ -8,6 +8,7 @@ use Modix\Grpc\Example\ExampleInterface;
 use Modix\Grpc\Example\ExampleStatus;
 use Modix\Grpc\Example\ToUpperArgs;
 use Modix\Grpc\Example\ToUpperResult;
+use Psr\Log\LoggerInterface;
 use Spiral\GRPC;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -18,15 +19,18 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 class ExampleService implements ExampleInterface
 {
-    private ParameterBagInterface $parameterBag;
+    private LoggerInterface $logger;
 
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->parameterBag = $parameterBag;
+        $this->logger = $logger;
     }
 
     public function toUpper(GRPC\ContextInterface $ctx, ToUpperArgs $in): ToUpperResult
     {
+
+        $this->logger->info("to upper was called, yeyyy");
+
         $string = $in->getString();
         if (empty($string)) {
             throw new GRPC\Exception\ServiceException("The given string must not be empty", ExampleStatus::EMPTY_STRING);

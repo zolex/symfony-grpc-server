@@ -1,5 +1,6 @@
 rpc:
   enable: false
+  #listen: tcp://127.0.0.1:6001
 
 metric:
   enable: false
