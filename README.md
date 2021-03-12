@@ -19,29 +19,24 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 
 
 ## Run the examples
+
+### Setup docker containers
+
 * generate the roadrunner binary with `docker-compose run protoc make server`
 * generate the php code with `docker-compose run protoc make code`
-* start the gRPC server with `docker-compose up server`
+* start the gRPC server with `docker-compose up`
 * create the database with `docker-compose exec server bin/console doctrine:migrations:migrate --no-interaction`
 
-### Run seperately with client container
-`docker-compose run client -exec "bin/console client:example:persistVehicle Audi S5 COUPE 1"`
-
-`docker-compose run client -exec "bin/console client:example:toUpper wurstwasser"`
-
-`docker-compose run client -exec "bin/console client:example:toUpper ''"`
-
-`docker-compose run client -exec "bin/console client:other:multiply 3 5`
-
-### Exec on booted client container
-`docker-compose up client -d`
-
+### Execute client commands
 `docker-compose exec client bin/console client:example:persistVehicle Audi S5 COUPE 1`
 
-`docker-compose exec client bin/console client:other:multiply 21 2`
+`docker-compose exec client bin/console client:example:toUpper wurstwasser`
 
-### Exec on booted server container
-`docker-compose exec server bin/console client:example:persistVehicle Audi S5 COUPE 1`
+`docker-compose exec client bin/console client:example:toUpper ""`
+
+`docker-compose exec client bin/console client:other:multiply 3 5`
+
+`docker-compose exec client bin/console client:other:multiply 21 2`
 
 ## Contribute / Extend
 
@@ -53,11 +48,16 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 * create a service class in `src\Services` that extends your generated Interface
 * register your service with the gRPC server in `config/services.yaml`
 
+### Database
+
+As the app is a long running worker, we need to ensure that the database connection is alive. The project contains a [Decorator for Doctrine EntityManager](src/Doctrine/EntityManager.php) that adds a new method to do so. 
+If you need to access the database in a gRPC service, make sure to call that method like in [this example](src/Service/Example/v1/ComandService.php).
+
 ### Extend the containers
 
 If you need additional system dependencies, it's a good idea to create a new Dockerfile based on one of the existing images. *If you prefer, you can also build everything from scratch, but please do not change the existing Dockerfiles.*
 
-Checkout the [doctrine branch](https://github.com/Modix/symfony-grpc-server/tree/doctrine) for an example.
+Checkout [docker/server/Dockerfile-ext](docker/server/Dockerfile-ext) for an example.
 
 ## Hints
 
