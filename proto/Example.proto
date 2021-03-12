@@ -21,6 +21,15 @@ message ToUpperResult {
   string string = 1;
 }
 
+message VehicleMessage {
+  int32 id = 1;
+  string make = 2;
+  string model = 3;
+  string type = 4;
+  int32 dealer = 5;
+};
+
 service Example {
   rpc toUpper(ToUpperArgs) returns (ToUpperResult);
+  rpc persistVehicle(VehicleMessage) returns (VehicleMessage);
 }
