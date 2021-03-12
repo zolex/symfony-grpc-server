@@ -56,21 +56,8 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 
 If you need additional system dependencies, it's a good idea to create a new Dockerfile based on one of the existing images. *If you prefer, you can also build everything from scratch, but please do not change the existing Dockerfiles.*
 
-```Dockerfile
-FROM zolex/grpc-php-server:0.0.1
-RUN apk add --no-cache --virtual .build-deps \
-        $PHPIZE_DEPS \
-        icu-dev \
-        mysql-dev \
-    && docker-php-ext-install \
-        intl \
-        pdo_mysql \
-    && pecl install \
-        apcu \
-    && pecl clear-cache \
-    && docker-php-ext-enable \
-        apcu \
-    && apk del .build-deps \
+Checkout the [doctrine branch](https://github.com/Modix/symfony-grpc-server/tree/doctrine) for an example.
+
 ```
 
 ## Hints
