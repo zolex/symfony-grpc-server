@@ -7,7 +7,7 @@ server: $(wildcard rr/**/*.go) $(wildcard rr/*.go)
 code:
 	rm -rf /var/www/grpc \
 	&& mkdir -p /var/www/grpc \
-	&& /usr/local/bin/protoc /var/www/proto/*.proto \
+	&& /usr/local/bin/protoc $(shell find /var/www/proto -type f -name "*.proto") \
 		--php_out=/var/www/grpc \
 		--php-grpc_out=/var/www/grpc \
 		--grpc_out=/var/www/grpc \

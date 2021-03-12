@@ -1,0 +1,13 @@
+syntax="proto3";
+
+package Service.Other.v1;
+
+option php_namespace="Modix\\Grpc\\Service\\Other\\v1";
+option php_metadata_namespace="Modix\\Grpc\\Service\\Other\\v1\\Metadata";
+
+import "Service/Other/v1/Model/Multiply.proto";
+
+service Query {
+  rpc multiply(Model.MultiplyArgs)
+      returns (Model.MultiplyResult);
+}

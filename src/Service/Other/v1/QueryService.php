@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Other\v1;
 
-use Modix\Grpc\Other\MultiplyArgs;
-use Modix\Grpc\Other\MultiplyResult;
-use Modix\Grpc\Other\OtherInterface;
+use Modix\Grpc\Service\Other\v1\Model\MultiplyArgs;
+use Modix\Grpc\Service\Other\v1\Model\MultiplyResult;
+use Modix\Grpc\Service\Other\v1\QueryInterface;
 use Spiral\GRPC;
 
 /**
@@ -14,7 +14,7 @@ use Spiral\GRPC;
  *
  * @package App\Service
  */
-class OtherService implements OtherInterface
+class QueryService implements QueryInterface
 {
     public function multiply(GRPC\ContextInterface $ctx, MultiplyArgs $in): MultiplyResult
     {

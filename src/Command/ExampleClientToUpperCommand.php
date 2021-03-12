@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use Modix\Grpc\Example\ExampleClient;
-use Modix\Grpc\Example\ExampleStatus;
-use Modix\Grpc\Example\ToUpperArgs;
-use Modix\Grpc\Example\ToUpperResult;
-use Spiral\GRPC\StatusCode;
+use Modix\Grpc\Service\Example\v1\Metadata\Query;
+use Modix\Grpc\Service\Example\v1\Model\StatusCode;
+use Modix\Grpc\Service\Example\v1\Model\ToUpperArgs;
+use Modix\Grpc\Service\Example\v1\Model\ToUpperResult;
+use Modix\Grpc\Service\Example\v1\QueryClient;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,7 +45,7 @@ class ExampleClientToUpperCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::toUpper('". $input->getArgument('string') ."')...");
 
-        $client = new ExampleClient("host.docker.internal:3886", [
+        $client = new QueryClient("host.docker.internal:3886", [
             'credentials' => \Grpc\ChannelCredentials::createInsecure()
         ]);
 
@@ -57,7 +57,7 @@ class ExampleClientToUpperCommand extends Command
             case StatusCode::OK:
                 $io->success($result->getString());
                 return Command::SUCCESS;
-            case ExampleStatus::EMPTY_STRING:
+            case StatusCode::EMPTY_STRING:
                 $io->error("The ExampleStatus::EMPTY was thrown: ". $status->details);
                 return Command::FAILURE;
             default:

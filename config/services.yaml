@@ -24,6 +24,12 @@ services:
         arguments:
             $options: '%grpc_options%'
         calls:
-          - registerService: ['Modix\Grpc\Example\ExampleInterface', '@App\Service\ExampleService']
-          - registerService: ['Modix\Grpc\Other\OtherInterface', '@App\Service\OtherService']
+          - registerService: ['Modix\Grpc\Service\Example\v1\QueryInterface', '@App\Service\Example\v1\QueryService']
+          - registerService: ['Modix\Grpc\Service\Example\v1\CommandInterface', '@App\Service\Example\v1\ComandService']
+          - registerService: ['Modix\Grpc\Service\Other\v1\QueryInterface', '@App\Service\Other\v1\QueryService']
           - serve: ['@Spiral\RoadRunner\Worker']
+
+    App\Doctrine\EntityManager:
+        class: App\Doctrine\EntityManager
+        decorates: doctrine.orm.default_entity_manager
+        arguments: [ '@App\Doctrine\EntityManager.inner' ]

@@ -1,0 +1,13 @@
+syntax="proto3";
+
+package Service.Example.v1;
+
+option php_namespace="Modix\\Grpc\\Service\\Example\\v1";
+option php_metadata_namespace="Modix\\Grpc\\Service\\Example\\v1\\Metadata";
+
+import "Service/Example/v1/Model/Vehicle.proto";
+
+service Command {
+  rpc persistVehicle(Model.Vehicle)
+      returns (Model.Vehicle);
+}

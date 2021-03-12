@@ -3,5 +3,6 @@ syntax="proto3";
 // just import all your needed services here.
 // please don't do anything else in this file.
 
-import "../proto/Example.proto";
-import "../proto/Other.proto";
+import "../proto/Service/Example/v1/Command.proto";
+import "../proto/Service/Example/v1/Query.proto";
+import "../proto/Service/Other/v1/Query.proto";
