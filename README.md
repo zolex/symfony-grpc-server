@@ -58,8 +58,6 @@ If you need additional system dependencies, it's a good idea to create a new Doc
 
 Checkout the [doctrine branch](https://github.com/Modix/symfony-grpc-server/tree/doctrine) for an example.
 
-```
-
 ## Hints
 
 * everytime you make a change on the server code, you must restart the server.
