@@ -27,3 +27,8 @@ services:
           - registerService: ['Modix\Grpc\Example\ExampleInterface', '@App\Service\ExampleService']
           - registerService: ['Modix\Grpc\Other\OtherInterface', '@App\Service\OtherService']
           - serve: ['@Spiral\RoadRunner\Worker']
+
+    App\Doctrine\EntityManager:
+        class: App\Doctrine\EntityManager
+        decorates: doctrine.orm.default_entity_manager
+        arguments: [ '@App\Doctrine\EntityManager.inner' ]

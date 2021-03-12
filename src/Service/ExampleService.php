@@ -45,6 +45,8 @@ class ExampleService implements ExampleInterface
 
     public function persistVehicle(GRPC\ContextInterface $ctx, VehicleMessage $in): VehicleMessage
     {
+        $this->entityManager->ensureConnection();
+
         $vehicle = new Vehicle();
         $vehicle->setMake($in->getMake());
         $vehicle->setModel($in->getModel());
@@ -56,8 +58,14 @@ class ExampleService implements ExampleInterface
         $this->entityManager->persist($vehicle);
         $this->entityManager->flush();
 
-        $in->setId($vehicle->getId());
+        $out = new VehicleMessage();
+        $out->setId($vehicle->getId());
+        $out->setMake($vehicle->getMake());
+        $out->setModel($vehicle->getModel());
+        $out->setType($vehicle->getType());
+        if ($dealer = $vehicle->getDealer())
+            $out->setDealer($dealer->getId());
 
-        return $in;
+        return $out;
     }
 }

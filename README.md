@@ -22,6 +22,7 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 * generate the roadrunner binary with `docker-compose run protoc make server`
 * generate the php code with `docker-compose run protoc make code`
 * start the gRPC server with `docker-compose up server`
+* create the database with `docker-compose exec server bin/console doctrine:migrations:migrate --no-interaction`
 
 ### Run seperately with client container
 `docker-compose run client -exec "bin/console client:example:toUpper wurstwasser"`
