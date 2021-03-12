@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use Modix\Grpc\Example\ExampleClient;
-use Modix\Grpc\Example\VehicleMessage;
+use Modix\Grpc\Service\Example\v1\CommandClient;
+use Modix\Grpc\Service\Example\v1\Model\Vehicle;
 use Spiral\GRPC\StatusCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -46,12 +46,12 @@ class ExampleClientPersistVehicleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::persistVehicle()");
 
-        $client = new ExampleClient("host.docker.internal:3886", [
+        $client = new CommandClient("host.docker.internal:3886", [
             'credentials' => \Grpc\ChannelCredentials::createInsecure()
         ]);
 
-        /** @var VehicleMessage $result */
-        $args = (new VehicleMessage)
+        /** @var Vehicle $result */
+        $args = (new Vehicle)
             ->setDealer((int)$input->getArgument('dealerId'))
             ->setMake($input->getArgument('make'))
             ->setModel($input->getArgument('model'))
@@ -60,7 +60,7 @@ class ExampleClientPersistVehicleCommand extends Command
 
         switch ($status->code) {
             case StatusCode::OK:
-                $io->success($result);
+                $io->success(sprintf("new vehicle ID: %d, Make: %s, Model: %s, Type: %d, Dealer ID: %d", $result->getId(), $result->getMake(), $result->getModel(), $result->getType(), $result->getDealer()));
                 return Command::SUCCESS;
             default:
                 print_r($status);

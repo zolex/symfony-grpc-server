@@ -1,0 +1,14 @@
+syntax="proto3";
+
+package Service.Example.v1.Model;
+
+option php_namespace="Modix\\Grpc\\Service\\Example\\v1\\Model";
+option php_metadata_namespace="Modix\\Grpc\\Service\\Example\\v1\\Metadata";
+
+message Vehicle {
+  int32 id = 1;
+  string make = 2;
+  string model = 3;
+  string type = 4;
+  int32 dealer = 5;
+};

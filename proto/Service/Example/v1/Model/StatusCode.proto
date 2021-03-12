@@ -1,0 +1,14 @@
+syntax="proto3";
+
+package Service.Example.v1.Model;
+
+option php_namespace="Modix\\Grpc\\Service\\Example\\v1\\Model";
+option php_metadata_namespace="Modix\\Grpc\\Service\\Example\\v1\\Metadata";
+
+enum StatusCode {
+  // 0 must be here in proto3
+  OK = 0;
+  // other status codes should be > 16 to avoid
+  // mixing up with Spiral\GRPC\StatusCode values
+  EMPTY_STRING = 100;
+}

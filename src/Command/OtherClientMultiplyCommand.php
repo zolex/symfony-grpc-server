@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use Modix\Grpc\Other\MultiplyArgs;
-use Modix\Grpc\Other\MultiplyResult;
-use Modix\Grpc\Other\OtherClient;
+use Modix\Grpc\Service\Other\v1\Model\MultiplyArgs;
+use Modix\Grpc\Service\Other\v1\Model\MultiplyResult;
+use Modix\Grpc\Service\Other\v1\QueryClient;
 use Spiral\GRPC\StatusCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,7 +48,7 @@ class OtherClientMultiplyCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::multiply(". $a .", ". $b .")...");
 
-        $client = new OtherClient("host.docker.internal:3886", [
+        $client = new QueryClient("host.docker.internal:3886", [
             'credentials' => \Grpc\ChannelCredentials::createInsecure()
         ]);
 

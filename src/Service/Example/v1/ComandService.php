@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Example\v1;
 
 use App\Entity\Dealer;
 use App\Entity\Vehicle;
 use Doctrine\ORM\EntityManagerInterface;
-use Modix\Grpc\Example\ExampleInterface;
-use Modix\Grpc\Example\ExampleStatus;
-use Modix\Grpc\Example\ToUpperArgs;
-use Modix\Grpc\Example\ToUpperResult;
-use Modix\Grpc\Example\VehicleMessage;
+use Modix\Grpc\Service\Example\v1\CommandInterface;
+use Modix\Grpc\Service\Example\v1\Model\Vehicle as VehicleMessage;
 use Psr\Log\LoggerInterface;
 use Spiral\GRPC;
 
@@ -20,7 +17,7 @@ use Spiral\GRPC;
  *
  * @package App\Service
  */
-class ExampleService implements ExampleInterface
+class ComandService implements CommandInterface
 {
     private LoggerInterface $logger;
     private EntityManagerInterface $entityManager;
@@ -29,18 +26,6 @@ class ExampleService implements ExampleInterface
     {
         $this->logger = $logger;
         $this->entityManager = $entityManager;
-    }
-
-    public function toUpper(GRPC\ContextInterface $ctx, ToUpperArgs $in): ToUpperResult
-    {
-        $this->logger->info("to upper was called, yeyyy");
-
-        $string = $in->getString();
-        if (empty($string)) {
-            throw new GRPC\Exception\ServiceException("The given string must not be empty", ExampleStatus::EMPTY_STRING);
-        }
-
-        return (new ToUpperResult)->setString(strtoupper($string));
     }
 
     public function persistVehicle(GRPC\ContextInterface $ctx, VehicleMessage $in): VehicleMessage
