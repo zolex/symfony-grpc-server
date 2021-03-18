@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GRPC;
 
 use Spiral\GRPC\Server as BaseServer;
+use Spiral\GRPC\ServiceInterface;
 use Spiral\RoadRunner\Worker;
 
 /**
@@ -16,6 +17,10 @@ class Server
 {
     private BaseServer $server;
     private Worker $worker;
+
+    /**
+     * @var ServiceInterface[]
+     */
     private iterable $services;
 
     /**
@@ -23,7 +28,7 @@ class Server
      *
      * @param BaseServer $server
      * @param Worker $worker
-     * @param iterable $services
+     * @param ServiceInterface[] $services
      */
     public function __construct(BaseServer $server, Worker $worker, iterable $services)
     {
@@ -40,7 +45,12 @@ class Server
         foreach ($this->services as $service) {
             $reflection = new \ReflectionClass($service);
             $interfaces = $reflection->getInterfaceNames();
-            $this->server->registerService($interfaces[0], $service);
+            foreach ($interfaces as $interface) {
+                if (str_contains($interface, 'Modix\Grpc\Service')) {
+                    $this->server->registerService($interface, $service);
+                    break;
+                }
+            }
         }
     }
 

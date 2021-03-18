@@ -43,7 +43,7 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 
 ### Add new services
 
-* Put your custom `.proto` files in the `/proto` directory
+* Put your custom `.proto` files in the `/proto` directory *(php namespaces must begin with "Modix\\Grpc\\Service" otherwise automatic service registration does not work)*
 * import your service protos in `config/services.proto`
 * generate the php code with `docker-compose run protoc make code`
 * create a service class in `src\Services` that extends your generated Interface
@@ -63,4 +63,3 @@ Checkout [docker/server/Dockerfile-ext](docker/server/Dockerfile-ext) for an exa
 ## Hints
 
 * everytime you make a change on the server code, you must restart the server.
-* If you do not want to use the `Modix\Grpc` namespace like in the examples, you can add another psr-4 autoload entry in composer.json and call `composer dump-autoload`)
