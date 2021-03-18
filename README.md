@@ -13,7 +13,7 @@ Protocol Buffer Definitions are located in `/proto`. Generated PHP code will go 
 
 Roadrunner's gRPC plugin needs to know the proto files for all registered services. They are imported via `config/services.proto`.
 
-Spiral's gRPC PHP server and the gRPC services are registered as symfony services in `config/services.yaml`.
+Spiral's gRPC PHP server and the gRPC services are automatically registered as symfony services in `config/services.yaml`.
 
 Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel to enable all the symfony features and serves spiral's gRPC worker.
 
@@ -44,15 +44,15 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 ### Add new services
 
 * Put your custom `.proto` files in the `/proto` directory
-* import your protos in `config/services.proto`
+* import your service protos in `config/services.proto`
 * generate the php code with `docker-compose run protoc make code`
 * create a service class in `src\Services` that extends your generated Interface
-* register your service with the gRPC server in `config/services.yaml`
 
 ### Database
 
 As the app is a long running worker, we need to ensure that the database connection is alive. The project contains a [Decorator for Doctrine EntityManager](src/Doctrine/EntityManager.php) that adds a new method to do so. 
 If you need to access the database in a gRPC service, make sure to call that method like in [this example](src/Service/Example/v1/ComandService.php).
+Also it is a good idea to call `$entityManager->clear()`before returning your reponse from a gRPC service method to keep the memory usage low.
 
 ### Extend the containers
 

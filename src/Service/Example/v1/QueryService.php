@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Example\v1;
 
+use App\Entity\Vehicle;
 use Doctrine\ORM\EntityManagerInterface;
+use Modix\Grpc\Service\Example\v1\Model;
 use Modix\Grpc\Service\Example\v1\Model\StatusCode;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperArgs;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperResult;
@@ -38,5 +40,17 @@ class QueryService implements QueryInterface
         }
 
         return (new ToUpperResult)->setString(strtoupper($string));
+    }
+
+    public function findVehicle(GRPC\ContextInterface $ctx, Model\VehicleFilter $in): Model\Vehicle
+    {
+        $this->entityManager->ensureConnection();
+
+        if (!$vehicle = $this->entityManager->getRepository(Vehicle::class)->findVehicle($in))
+            return new Model\Vehicle;
+
+        $this->entityManager->clear();
+
+        return $vehicle->getMessage();
     }
 }

@@ -12,3 +12,7 @@ message Vehicle {
   string type = 4;
   int32 dealer = 5;
 };
+
+message VehicleFilter {
+  int32 id = 1;
+}

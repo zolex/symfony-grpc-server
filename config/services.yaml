@@ -19,15 +19,19 @@ services:
 
     Spiral\RoadRunner\Worker:
         arguments: ['@App\Goridge\RelayWrapper']
+
     Spiral\GRPC\Server:
-        public: true
         arguments:
             $options: '%grpc_options%'
-        calls:
-          - registerService: ['Modix\Grpc\Service\Example\v1\QueryInterface', '@App\Service\Example\v1\QueryService']
-          - registerService: ['Modix\Grpc\Service\Example\v1\CommandInterface', '@App\Service\Example\v1\ComandService']
-          - registerService: ['Modix\Grpc\Service\Other\v1\QueryInterface', '@App\Service\Other\v1\QueryService']
-          - serve: ['@Spiral\RoadRunner\Worker']
+
+    _instanceof:
+        Spiral\GRPC\ServiceInterface:
+            tags: [ 'grpc.service' ]
+
+    App\GRPC\Server:
+        public: true
+        arguments:
+            $services: !tagged_iterator 'grpc.service'
 
     App\Doctrine\EntityManager:
         class: App\Doctrine\EntityManager

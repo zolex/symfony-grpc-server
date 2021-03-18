@@ -33,6 +33,7 @@ class Vehicle
     private $type;
 
     /**
+     * @var Dealer
      * @ORM\ManyToOne(targetEntity=Dealer::class, inversedBy="vehicles")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -89,5 +90,16 @@ class Vehicle
         $this->dealer = $dealer;
 
         return $this;
+    }
+
+    public function getMessage(): \Modix\Grpc\Service\Example\v1\Model\Vehicle
+    {
+        return new \Modix\Grpc\Service\Example\v1\Model\Vehicle([
+            'id' => $this->id,
+            'model' => $this->model,
+            'make' => $this->make,
+            'type' => $this->type,
+            'dealer' => $this->dealer ? $this->dealer->getId() : null,
+        ]);
     }
 }

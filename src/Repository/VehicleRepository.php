@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Modix\Grpc\Service\Example\v1\Model\VehicleFilter;
 
 /**
  * @method Vehicle|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,20 @@ class VehicleRepository extends ServiceEntityRepository
         parent::__construct($registry, Vehicle::class);
     }
 
-    // /**
-    //  * @return Vehicle[] Returns an array of Vehicle objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param VehicleFilter $filter
+     *
+     * @return Vehicle|null
+     * @throws NonUniqueResultException
+     */
+    public function findVehicle(VehicleFilter $filter): ?Vehicle
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('vehicle')
+            ->innerJoin('vehicle.dealer', 'dealer')
+            ->where('vehicle.id = :id')
+            ->setParameter('id', $filter->getId())
             ->getQuery()
-            ->getResult()
-        ;
+            ->disableResultCache()
+            ->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Vehicle
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

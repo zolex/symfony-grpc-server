@@ -35,4 +35,9 @@ class Kernel extends BaseKernel
             (require $path)($routes->withPath($path), $this);
         }
     }
+
+    public function serveGrpc()
+    {
+        $this->container->get('App\GRPC\Server')->serve();
+    }
 }
