@@ -1,4 +1,4 @@
-.PHONY: server code cert js
+.PHONY: server php web cert
 server: $(wildcard rr/**/*.go) $(wildcard rr/*.go)
 	cd rr \
 	&& go get -t . \
