@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\GRPC\ClientFactory;
 use Modix\Grpc\Service\Other\v1\Model\MultiplyArgs;
 use Modix\Grpc\Service\Other\v1\Model\MultiplyResult;
 use Modix\Grpc\Service\Other\v1\QueryClient;
@@ -22,6 +23,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class OtherClientMultiplyCommand extends Command
 {
     protected static $defaultName = 'client:other:multiply';
+    private ClientFactory $clientFactory;
+
+    public function __construct(ClientFactory $clientFactory)
+    {
+        parent::__construct(null);
+        $this->clientFactory = $clientFactory;
+    }
 
     /**
      * Configure the command
@@ -48,9 +56,7 @@ class OtherClientMultiplyCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::multiply(". $a .", ". $b .")...");
 
-        $client = new QueryClient("host.docker.internal:3886", [
-            'credentials' => \Grpc\ChannelCredentials::createInsecure()
-        ]);
+        $client = $this->clientFactory->create(QueryClient::class);
 
         /** @var MultiplyResult $result */
         $args = (new MultiplyArgs)->setA($a)->setB($b);

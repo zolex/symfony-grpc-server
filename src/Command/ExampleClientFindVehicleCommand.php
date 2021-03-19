@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\GRPC\ClientFactory;
 use Modix\Grpc\Service\Example\v1\Model\Vehicle;
 use Modix\Grpc\Service\Example\v1\Model\VehicleFilter;
 use Modix\Grpc\Service\Example\v1\QueryClient;
@@ -22,6 +23,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ExampleClientFindVehicleCommand extends Command
 {
     protected static $defaultName = 'client:example:findVehicle';
+    private ClientFactory $clientFactory;
+
+    public function __construct(ClientFactory $clientFactory)
+    {
+        parent::__construct(null);
+        $this->clientFactory = $clientFactory;
+    }
 
     /**
      * Configure the command
@@ -44,9 +52,7 @@ class ExampleClientFindVehicleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::findVehicle()");
 
-        $client = new QueryClient("host.docker.internal:3886", [
-            'credentials' => \Grpc\ChannelCredentials::createInsecure()
-        ]);
+        $client = $this->clientFactory->create(QueryClient::class);
 
         /** @var Vehicle $result */
         $args = (new VehicleFilter)->setId((int)$input->getArgument('id'));

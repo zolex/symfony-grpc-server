@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\GRPC\ClientFactory;
 use Modix\Grpc\Service\Example\v1\Metadata\Query;
 use Modix\Grpc\Service\Example\v1\Model\StatusCode;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperArgs;
@@ -23,6 +24,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ExampleClientToUpperCommand extends Command
 {
     protected static $defaultName = 'client:example:toUpper';
+    private ClientFactory $clientFactory;
+
+    public function __construct(ClientFactory $clientFactory)
+    {
+        parent::__construct(null);
+        $this->clientFactory = $clientFactory;
+    }
 
     /**
      * Configure the command
@@ -45,9 +53,7 @@ class ExampleClientToUpperCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::toUpper('". $input->getArgument('string') ."')...");
 
-        $client = new QueryClient("host.docker.internal:3886", [
-            'credentials' => \Grpc\ChannelCredentials::createInsecure()
-        ]);
+        $client = $this->clientFactory->create(QueryClient::class);
 
         /** @var ToUpperResult $result */
         $args = (new ToUpperArgs)->setString($input->getArgument('string'));

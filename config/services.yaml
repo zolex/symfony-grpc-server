@@ -1,6 +1,15 @@
 parameters:
     grpc_options:
         debug: '%kernel.debug%'
+    grpc_clients:
+        # options by classname
+        Modix\Grpc\Service\Example\v1\QueryClient:
+            host: host.docker.internal
+            port: 3886
+        # for all unspecified clients
+        default:
+            host: host.docker.internal
+            port: 3886
 
 services:
     _defaults:

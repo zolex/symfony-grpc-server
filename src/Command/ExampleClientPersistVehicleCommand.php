@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\GRPC\ClientFactory;
 use Modix\Grpc\Service\Example\v1\CommandClient;
 use Modix\Grpc\Service\Example\v1\Model\Vehicle;
 use Spiral\GRPC\StatusCode;
@@ -21,6 +22,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ExampleClientPersistVehicleCommand extends Command
 {
     protected static $defaultName = 'client:example:persistVehicle';
+    private ClientFactory $clientFactory;
+
+    public function __construct(ClientFactory $clientFactory)
+    {
+        parent::__construct(null);
+        $this->clientFactory = $clientFactory;
+    }
+
 
     /**
      * Configure the command
@@ -46,9 +55,7 @@ class ExampleClientPersistVehicleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::persistVehicle()");
 
-        $client = new CommandClient("host.docker.internal:3886", [
-            'credentials' => \Grpc\ChannelCredentials::createInsecure()
-        ]);
+        $client = $this->clientFactory->create(CommandClient::class);
 
         /** @var Vehicle $result */
         $args = (new Vehicle)
