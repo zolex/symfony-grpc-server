@@ -22,7 +22,7 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 
 ### Setup docker containers
 
-* generate the roadrunner binary with `docker-compose run protoc make server`
+* compile the roadrunner binary with `docker-compose run protoc make server`
 * generate the php code with `docker-compose run protoc make php`
 * start the gRPC server with `docker-compose up`
 * *the very first start of the server container can take some time because it will install composer dependencies silently, wait until you see some deprecated warnings from spiral*
