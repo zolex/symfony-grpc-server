@@ -9,7 +9,7 @@ There are three pre-built docker images. `protoc` for generating php code, `serv
 
 The server's entrypoint is a minimal custom roadrunner binary, created from the sources in `/rr`.
 
-Protocol Buffer Definitions are located in `/proto`. Generated PHP code will go in `/grpc` and must not be commited (It's already ignored).
+Protocol Buffer Definitions are located in `/proto`. Generated PHP code will go in `/grpc-php` and must not be commited (It's already ignored).
 
 Roadrunner's gRPC plugin needs to know the proto files for all registered services. They are imported via `config/services.proto`.
 
@@ -23,10 +23,15 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 ### Setup docker containers
 
 * generate the roadrunner binary with `docker-compose run protoc make server`
-* generate the php code with `docker-compose run protoc make code`
+* generate the php code with `docker-compose run protoc make php`
 * start the gRPC server with `docker-compose up`
 * *the very first start of the server container can take some time because it will install composer dependencies silently, wait until you see some deprecated warnings from spiral*
 * create the database with `docker-compose exec server bin/console doctrine:migrations:migrate --no-interaction`
+
+### Generate web/js code
+If you need the javascript code for use in web clients you can generate it as well using the included protoc plugin.
+* generate the web code with `docker-compose run protoc make web`
+
 
 ### Execute client commands
 `docker-compose exec client bin/console client:example:persistVehicle Audi S5 COUPE 1`

@@ -5,7 +5,7 @@ services:
     #build:
     #  dockerfile: docker/protoc/Dockerfile
     #  context: .
-    image: zolex/protoc-php-server:0.0.2
+    image: zolex/protoc-php-js:0.0.1
     working_dir: /var/www
     volumes:
       - .:/var/www

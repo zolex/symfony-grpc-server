@@ -10,6 +10,7 @@
 
 /bin/rr
 /rr/go.sum
-/grpc
+/grpc-php
+/grpc-web
 /config/tls
 /.idea
