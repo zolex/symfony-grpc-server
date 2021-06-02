@@ -14,3 +14,4 @@
 /grpc-web
 /config/tls
 /.idea
+/GrpcBundle

@@ -5,48 +5,35 @@ namespace App\Entity;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=VehicleRepository::class)
- */
+#[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $make;
+    #[ORM\Column(type: "string", length: 255)]
+    private string $make;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $model;
+    #[ORM\Column(type: "string", length: 255)]
+    private string $model;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $type;
+    #[ORM\Column(type: "string", length: 255)]
+    private string $type;
 
-    /**
-     * @var Dealer
-     * @ORM\ManyToOne(targetEntity=Dealer::class, inversedBy="vehicles")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $dealer;
+    #[ORM\ManyToOne(targetEntity: Dealer::class, inversedBy: "vehicles")]
+    #[ORM\JoinColumn(nullable: true)]
+    private Dealer|null $dealer;
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id ?? null;
     }
 
     public function getMake(): ?string
     {
-        return $this->make;
+        return $this->make ?? null;
     }
 
     public function setMake(string $make): self
@@ -58,7 +45,7 @@ class Vehicle
 
     public function getModel(): ?string
     {
-        return $this->model;
+        return $this->model ?? null;
     }
 
     public function setModel(string $model): self
@@ -70,7 +57,7 @@ class Vehicle
 
     public function getType(): ?string
     {
-        return $this->type;
+        return $this->type ?? null;
     }
 
     public function setType(string $type): self
@@ -82,7 +69,7 @@ class Vehicle
 
     public function getDealer(): ?Dealer
     {
-        return $this->dealer;
+        return $this->dealer ?? null;
     }
 
     public function setDealer(?Dealer $dealer): self
@@ -95,11 +82,11 @@ class Vehicle
     public function getMessage(): \Modix\Grpc\Service\Example\v1\Model\Vehicle
     {
         return new \Modix\Grpc\Service\Example\v1\Model\Vehicle([
-            'id' => $this->id,
-            'model' => $this->model,
-            'make' => $this->make,
-            'type' => $this->type,
-            'dealer' => $this->dealer ? $this->dealer->getId() : null,
+            'id' => $this->getId(),
+            'model' => $this->getModel(),
+            'make' => $this->getMake(),
+            'type' => $this->getType(),
+            'dealer' => $this->getDealer()?->getId(),
         ]);
     }
 }

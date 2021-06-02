@@ -21,28 +21,8 @@ services:
         exclude: '../src/{DependencyInjection,Entity,Migrations,Test,Kernel.php}'
 
     # remember to add sockets and json php extensions when enabling this...
-    #Spiral\Goridge\SocketRelay:
-    #    arguments: ['127.0.0.1', 6001]
-    #Spiral\Goridge\RPC:
-    #    arguments: ['@Spiral\Goridge\SocketRelay']
+    Spiral\Goridge\SocketRelay:
+        arguments: ['127.0.0.1', 6001]
+    Spiral\Goridge\RPC:
+        arguments: ['@Spiral\Goridge\SocketRelay']
 
-    Spiral\RoadRunner\Worker:
-        arguments: ['@App\Goridge\RelayWrapper']
-
-    Spiral\GRPC\Server:
-        arguments:
-            $options: '%grpc_options%'
-
-    _instanceof:
-        Spiral\GRPC\ServiceInterface:
-            tags: [ 'grpc.service' ]
-
-    App\GRPC\Server:
-        public: true
-        arguments:
-            $services: !tagged_iterator 'grpc.service'
-
-    App\Doctrine\EntityManager:
-        class: App\Doctrine\EntityManager
-        decorates: doctrine.orm.default_entity_manager
-        arguments: [ '@App\Doctrine\EntityManager.inner' ]

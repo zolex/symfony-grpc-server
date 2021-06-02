@@ -8,6 +8,7 @@ import (
     "github.com/spiral/roadrunner/service/rpc"
 
     // grpc specific commands
+    debugger "plugins/debugger"
     _ "github.com/spiral/php-grpc/cmd/rr-grpc/grpc"
 )
 
@@ -17,6 +18,8 @@ func main() {
 
     rr.Container.Register(metrics.ID, &metrics.Service{})
     rr.Container.Register(limit.ID, &limit.Service{})
+
+    rr.Container.Register(debugger.ID, &debugger.Service{})
 
     rr.Execute()
 }

@@ -7,32 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=DealerRepository::class)
- */
+#[ORM\Entity(repositoryClass: DealerRepository::class)]
 class Dealer
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: "string", length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=2)
-     */
-    private $countryCode;
+    #[ORM\Column(type: "string", length: 2)]
+    private string $countryCode;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Vehicle::class, mappedBy="dealer")
-     */
-    private $vehicles;
+    #[ORM\OneToMany(mappedBy: "dealer", targetEntity: Vehicle::class)]
+    private Collection $vehicles;
 
     public function __construct()
     {
@@ -41,12 +31,12 @@ class Dealer
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id ?? null;
     }
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): self
@@ -58,7 +48,7 @@ class Dealer
 
     public function getCountryCode(): ?string
     {
-        return $this->countryCode;
+        return $this->countryCode ?? null;
     }
 
     public function setCountryCode(string $countryCode): self

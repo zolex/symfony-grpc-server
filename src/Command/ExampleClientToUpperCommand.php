@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\GRPC\ClientFactory;
-use Modix\Grpc\Service\Example\v1\Metadata\Query;
 use Modix\Grpc\Service\Example\v1\Model\StatusCode;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperArgs;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperResult;
@@ -15,6 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Zolex\GrpcBundle\GRPC\ClientFactory;
 
 /**
  * Class ExampleClientCommand

@@ -38,6 +38,6 @@ class Kernel extends BaseKernel
 
     public function serveGrpc()
     {
-        $this->container->get('App\GRPC\Server')->serve();
+        $this->container->get('zolex.grpc.server')->serve();
     }
 }

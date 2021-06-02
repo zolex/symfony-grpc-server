@@ -7,5 +7,5 @@ monolog:
             channels: ["!event"]
         console:
             type: service
-            id: App\Logger\GoridgeRpcHandler
+            id: zolex.grpc.logger.handler
             channels: ["!event"]

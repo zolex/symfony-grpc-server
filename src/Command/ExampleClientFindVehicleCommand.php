@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\GRPC\ClientFactory;
 use Modix\Grpc\Service\Example\v1\Model\Vehicle;
 use Modix\Grpc\Service\Example\v1\Model\VehicleFilter;
 use Modix\Grpc\Service\Example\v1\QueryClient;
@@ -14,6 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Zolex\GrpcBundle\GRPC\ClientFactory;
 
 /**
  * Class ExampleClientFindVehicleCommand
@@ -23,7 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ExampleClientFindVehicleCommand extends Command
 {
     protected static $defaultName = 'client:example:findVehicle';
-    private ClientFactory $clientFactory;
+    private \Zolex\GrpcBundle\GRPC\ClientFactory $clientFactory;
 
     public function __construct(ClientFactory $clientFactory)
     {

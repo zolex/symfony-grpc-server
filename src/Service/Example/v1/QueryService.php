@@ -44,8 +44,6 @@ class QueryService implements QueryInterface
 
     public function findVehicle(GRPC\ContextInterface $ctx, Model\VehicleFilter $in): Model\Vehicle
     {
-        $this->entityManager->ensureConnection();
-
         if (!$vehicle = $this->entityManager->getRepository(Vehicle::class)->findVehicle($in))
             return new Model\Vehicle;
 

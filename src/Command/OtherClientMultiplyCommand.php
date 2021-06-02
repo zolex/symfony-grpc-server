@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\GRPC\ClientFactory;
 use Modix\Grpc\Service\Other\v1\Model\MultiplyArgs;
 use Modix\Grpc\Service\Other\v1\Model\MultiplyResult;
 use Modix\Grpc\Service\Other\v1\QueryClient;
@@ -14,6 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Zolex\GrpcBundle\GRPC\ClientFactory;
 
 /**
  * Class OtherClientMultiplyCommand

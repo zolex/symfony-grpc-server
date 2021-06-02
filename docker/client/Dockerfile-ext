@@ -1,0 +1,12 @@
+FROM zolex/grpc-php-client:0.0.1
+
+RUN apk add --no-cache \
+        $PHPIZE_DEPS \
+        libzip-dev \
+        zlib-dev \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install -j"$(nproc)" \
+        sockets \
+    && pecl clear-cache \
+    && docker-php-ext-enable \
+        sockets

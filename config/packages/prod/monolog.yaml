@@ -12,5 +12,5 @@ monolog:
             level: debug
         console:
             type: service
-            id: App\Logger\GoridgeRpcHandler
+            id: zolex.grpc.logger.handler
             channels: ["!event"]

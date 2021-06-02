@@ -17,7 +17,7 @@ use Spiral\GRPC;
  *
  * @package App\Service
  */
-class ComandService implements CommandInterface
+class CommandService implements CommandInterface
 {
     private LoggerInterface $logger;
     private EntityManagerInterface $entityManager;
@@ -30,8 +30,6 @@ class ComandService implements CommandInterface
 
     public function persistVehicle(GRPC\ContextInterface $ctx, VehicleMessage $in): VehicleMessage
     {
-        $this->entityManager->ensureConnection();
-
         $vehicle = new Vehicle();
         $vehicle->setMake($in->getMake());
         $vehicle->setModel($in->getModel());

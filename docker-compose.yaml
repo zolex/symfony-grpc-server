@@ -9,6 +9,7 @@ services:
     working_dir: /var/www
     volumes:
       - .:/var/www
+      - ./rr/plugins/debugger:/usr/lib/go/src/plugins/debugger
 
   server:
     build:
@@ -24,10 +25,10 @@ services:
       - app_network
 
   client:
-    #build:
-    #  dockerfile: docker/client/Dockerfile
-    #  context: .
-    image: zolex/grpc-php-client:0.0.1
+    build:
+      dockerfile: docker/client/Dockerfile-ext
+      context: .
+    #image: zolex/grpc-php-client:0.0.1
     command: -exec "while true; do sleep 1000; done"
     working_dir: /var/www
     volumes:
