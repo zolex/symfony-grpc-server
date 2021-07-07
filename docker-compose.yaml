@@ -49,6 +49,16 @@ services:
       MYSQL_PASSWORD: grpc
     networks:
       - app_network
+  envoy:
+    build:
+      dockerfile: docker/envoy/Dockerfile
+      context: .
+    container_name: EnvoyToPHPServer
+    ports:
+      - '9901:9901'
+      - '8080:8080'
+    networks:
+      - app_network
 
 networks:
   app_network:
