@@ -24,6 +24,10 @@ RUN apk add --no-cache --virtual .build-deps cmake make g++ git zlib-dev \
     && wget https://github.com/grpc/grpc-web/releases/download/${GRPC_WEB_VERSION}/protoc-gen-grpc-web-${GRPC_WEB_VERSION}-linux-x86_64 \
     && mv protoc-gen-grpc-web-${GRPC_WEB_VERSION}-linux-x86_64 /usr/local/bin/protoc-gen-grpc-web \
     && chmod +x /usr/local/bin/protoc-gen-grpc-web \
+    && curl -Ls https://git.io/twirphp > twirphp \
+    && chmod +x ./twirphp \
+    && ./twirphp -b /usr/local/bin \
+    && chmod +x /usr/local/bin/protoc-gen-twirp_php \
     && rm -rf /protoc \
     && apk del .build-deps \
     && apk add make
