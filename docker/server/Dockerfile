@@ -26,4 +26,5 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-ENTRYPOINT ["/var/www/bin/rr", "serve", "-d", "-v"]
+ENTRYPOINT ["docker-php-entrypoint"]
+CMD ["/var/www/bin/rr", "serve", "-d", "-v"]

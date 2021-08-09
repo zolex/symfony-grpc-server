@@ -26,7 +26,6 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 * generate a certificate `docker-compose run protoc make cert`
 * generate the php code with `docker-compose run protoc make php`
 * start the gRPC server with `docker-compose up`
-* *the very first start of the server container can take some time because it will install composer dependencies silently, wait until you see some deprecated warnings from spiral*
 * create the database with `docker-compose exec server bin/console doctrine:migrations:migrate --no-interaction`
 
 ### gRPC UI
@@ -50,6 +49,14 @@ If you need the javascript code for use in web clients you can generate it as we
 `docker-compose exec client bin/console client:other:multiply 21 2`
 
 ## Contribute / Extend
+
+### Composer
+
+The composer dependencides are installed during build time of the server container. This is required to guarantee a seamless "first startup".
+Because the grpc-server's worker.php is a long-running program and part of the container's entrypoint, the vendor folder must already exist on container startup.
+
+If you need the vendor folder on your host machine (e.g. for debugging) you can use the docker-compose.override.yaml which will then overwrite the vendor folder from the build.
+For this to work, you must run `docker-compose run server composer install` before booting the containers.
 
 ### Add new services
 

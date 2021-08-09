@@ -1,4 +1,4 @@
-FROM zolex/grpc-php-server:0.0.1
+FROM zolex/grpc-php-server:0.0.2
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
@@ -39,3 +39,16 @@ RUN apk add --no-cache --virtual .build-deps \
         | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         )" \
     && apk add --no-cache --virtual .run-deps $runDeps
+
+COPY ./.env /var/www/.env
+COPY ./.rr.yaml /var/www/.rr.yaml
+COPY ./bin/console /var/www/bin/console
+COPY ./composer.json /var/www/composer.json
+COPY ./composer.lock /var/www/composer.lock
+COPY ./grpc-php /var/www/grpc-php
+COPY ./migrations /var/www/migrations
+COPY ./proto /var/www/proto
+COPY ./symfony.lock /var/www/symfony.lock
+COPY ./src /var/www/src
+COPY ./config /var/www/config
+RUN cd /var/www && composer install

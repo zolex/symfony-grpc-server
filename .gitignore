@@ -14,4 +14,4 @@
 /grpc-web
 /config/tls
 /.idea
-/GrpcBundle
+/docker-compose.override.yaml

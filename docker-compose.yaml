@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   protoc:
@@ -18,7 +18,18 @@ services:
     #image: zolex/grpc-php-server:0.0.1
     working_dir: /var/www
     volumes:
-      - .:/var/www
+      - ./.env:/var/www/.env
+      - ./.rr.yaml:/var/www/.rr.yaml
+      - ./bin:/var/www/bin
+      - ./composer.json:/var/www/composer.json
+      - ./composer.lock:/var/www/composer.lock
+      - ./config:/var/www/config
+      - ./grpc-php:/var/www/grpc-php
+      - ./migrations:/var/www/migrations
+      - ./proto:/var/www/proto
+      - ./src:/var/www/src
+      - ./symfony.lock:/var/www/symfony.lock
+      - ./var:/var/www/var:delegated
     ports:
       - 3886:3886
     networks:
