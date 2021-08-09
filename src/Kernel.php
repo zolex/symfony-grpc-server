@@ -35,9 +35,4 @@ class Kernel extends BaseKernel
             (require $path)($routes->withPath($path), $this);
         }
     }
-
-    public function serveGrpc()
-    {
-        $this->container->get('zolex.grpc.server')->serve();
-    }
 }
