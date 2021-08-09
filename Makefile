@@ -1,13 +1,8 @@
-.PHONY: server php web cert
-server: $(wildcard rr/**/*.go) $(wildcard rr/*.go)
-	cd rr \
-	&& go get -t . \
-	&& go build -a -x -v -o rr \
-	&& mv rr ../bin
+.PHONY: php web cert
 php:
 	rm -rf /var/www/grpc-php \
 	&& mkdir -p /var/www/grpc-php \
-	&& /usr/local/bin/protoc $(shell find /var/www/proto -type f -name "*.proto") \
+	&& /usr/local/bin/protoc $(shell find /var/www/proto/Service -type f -name "*.proto") \
 		--php_out=/var/www/grpc-php \
 		--php-grpc_out=/var/www/grpc-php \
 		--grpc_out=/var/www/grpc-php \
@@ -17,7 +12,7 @@ php:
 web:
 	rm -rf /var/www/grpc-web \
 	&& mkdir -p /var/www/grpc-web \
-	&& /usr/local/bin/protoc $(shell find /var/www/proto -type f -name "*.proto") \
+	&& /usr/local/bin/protoc $(shell find /var/www/proto/Service -type f -name "*.proto") \
 		--js_out=import_style=commonjs:/var/www/grpc-web \
 		--grpc-web_out=import_style=commonjs,mode=grpcwebtext:/var/www/grpc-web \
 		--plugin=protoc-gen-grpc-web=/usr/local/bin/protoc-gen-grpc-web \

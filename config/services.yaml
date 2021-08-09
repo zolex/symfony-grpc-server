@@ -21,8 +21,8 @@ services:
         exclude: '../src/{DependencyInjection,Entity,Migrations,Test,Kernel.php}'
 
     # remember to add sockets and json php extensions when enabling this...
-    Spiral\Goridge\SocketRelay:
-        arguments: ['127.0.0.1', 6001]
-    Spiral\Goridge\RPC:
-        arguments: ['@Spiral\Goridge\SocketRelay']
-
+    #Spiral\Goridge\SocketRelay:
+    #    arguments: ['127.0.0.1', 6001]
+    #Spiral\Goridge\RPC:
+    #    arguments: ['@Spiral\Goridge\SocketRelay']
+    #Zolex\GrpcBundle\Logger\GoridgeRpcHandler: ~
