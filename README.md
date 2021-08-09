@@ -28,6 +28,10 @@ Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel t
 * *the very first start of the server container can take some time because it will install composer dependencies silently, wait until you see some deprecated warnings from spiral*
 * create the database with `docker-compose exec server bin/console doctrine:migrations:migrate --no-interaction`
 
+### gRPC UI
+
+The included UI is able to discover the running services using the proto files and can be accessed on [http://0.0.0.0:1337](http://0.0.0.0:1337).
+
 ### Generate web/js code
 If you need the javascript code for use in web clients you can generate it as well using the included protoc plugin.
 * generate the web code with `docker-compose run protoc make web`
@@ -49,9 +53,9 @@ If you need the javascript code for use in web clients you can generate it as we
 ### Add new services
 
 * Put your custom `.proto` files in the `/proto` directory *(php namespaces must begin with "Modix\\Grpc\\Service" otherwise automatic service registration does not work)*
-* import your service protos in `config/services.proto`
+* import your service protos in `proto/services.proto`
 * generate the php code with `docker-compose run protoc make code`
-* create a service class in `src\Services` that extends your generated Interface
+* create a service class in `src\Services` that implements your generated interface
 
 ### Database
 
