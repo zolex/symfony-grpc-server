@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "539a66ffda627495791b66698197180a",
+    "content-hash": "c403aabe6c3c8d61675288e0ea09473e",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -5247,16 +5247,16 @@
         },
         {
             "name": "zolex/grpc-bundle",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zolex/GrpcBundle.git",
-                "reference": "5f45b60ed4dcb9f3ea04aed6b94dbbe0aa86cc4c"
+                "reference": "aaf3065eb2f7e5cf4d165dddc35ba25167683b8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zolex/GrpcBundle/zipball/5f45b60ed4dcb9f3ea04aed6b94dbbe0aa86cc4c",
-                "reference": "5f45b60ed4dcb9f3ea04aed6b94dbbe0aa86cc4c",
+                "url": "https://api.github.com/repos/zolex/GrpcBundle/zipball/aaf3065eb2f7e5cf4d165dddc35ba25167683b8b",
+                "reference": "aaf3065eb2f7e5cf4d165dddc35ba25167683b8b",
                 "shasum": ""
             },
             "require": {
@@ -5292,9 +5292,9 @@
             "description": "gRPC Bundle for Symfony",
             "support": {
                 "issues": "https://github.com/zolex/GrpcBundle/issues",
-                "source": "https://github.com/zolex/GrpcBundle/tree/0.0.3"
+                "source": "https://github.com/zolex/GrpcBundle/tree/0.0.4"
             },
-            "time": "2021-08-10T11:55:45+00:00"
+            "time": "2021-08-10T12:33:24+00:00"
         }
     ],
     "packages-dev": [
