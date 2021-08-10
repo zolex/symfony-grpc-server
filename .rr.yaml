@@ -9,10 +9,10 @@ metric:
 grpc:
   listen: tcp://0.0.0.0:3886
   proto: "proto/services.proto"
-  workers.command: "php bin/worker.php"
   #tls.key:  "config/tls/app.key"
   #tls.cert: "config/tls/app.crt"
   workers:
+    command: "php bin/worker.php"
     pool:
       numWorkers: 1
       maxJobs: 1
