@@ -1,6 +1,6 @@
-rpc:
-  enable: true
-  listen: tcp://127.0.0.1:6001
+#rpc:
+#  enable: true
+#  listen: tcp://127.0.0.1:6001
 
 metric:
   enable: false
@@ -12,8 +12,10 @@ grpc:
   workers.command: "php bin/worker.php"
   #tls.key:  "config/tls/app.key"
   #tls.cert: "config/tls/app.crt"
-  pool:
-    num_workers: 6
+  workers:
+    pool:
+      numWorkers: 1
+      maxJobs: 1
 
 # control the max memory usage
 limit:
