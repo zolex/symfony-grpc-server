@@ -1,5 +1,0 @@
-zolex_grpc:
-  server:
-    interface_namespace: Modix\Grpc\Service
-    options:
-      debug: true

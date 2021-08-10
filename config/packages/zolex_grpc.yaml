@@ -1,0 +1,12 @@
+zolex_grpc:
+    server:
+        interface_namespace: Modix\Grpc\Service
+        options:
+            debug: true
+    clients:
+        Modix\Grpc\Service\Example\v1\QueryClient:
+            host: host.docker.internal
+            port: 3886
+        default:
+            host: host.docker.internal
+            port: 3886
