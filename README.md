@@ -11,7 +11,7 @@ Protocol Buffer Definitions are located in `/proto`. Generated PHP code will go 
 
 Roadrunner's gRPC plugin needs to know the proto files for all registered services. They are imported via `config/services.proto`.
 
-Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel to enable all the symfony features and serves spiral's gRPC worker.
+Roadrunner starts the worker in `vendor/bin/grpc-worker` which uses the symfony kernel to enable all the symfony features and serves spiral's gRPC worker. If you need a custom worker, simply copy it from the vendor folder to your project's bin folder and update `.rr.yaml` to use `bin/grpc-worker`. 
 
 The gRPC clients are registered as symfony services in `config/services.yaml`(A one-liner for all generated clients).
 The clients are configured in the gRPC-bundle's `config/packages/zolex_grpc.yaml`.
@@ -50,16 +50,16 @@ If you need the javascript code for use in web clients you can generate it as we
 ### Composer
 
 The composer dependencides are installed during build time of the server container. This is required to guarantee a seamless "first startup".
-Because the grpc-server's worker.php is a long-running program and part of the container's entrypoint, the vendor folder must already exist on container startup.
+Because the grpc-server's worker is a long-running program and part of the container's entrypoint, the vendor folder must already exist on container startup.
 
 If you need the vendor folder on your host machine (e.g. for debugging) you can use the docker-compose.override.yaml which will then overwrite the vendor folder from the build.
 For this to work, you must run `docker-compose run server composer install` before booting the containers.
 
 ### Add new services
 
-* Put your custom `.proto` files in the `/proto` directory *(php namespaces must begin with "Modix\\Grpc\\Service" otherwise automatic service registration does not work)*
+* Put your custom `.proto` files in the `/proto` directory *(php namespaces should begin with "Modix\\Grpc\\Service")*
 * import your service protos in `proto/services.proto`
-* generate the php code with `docker-compose run protoc make code`
+* generate the php code with `docker-compose run protoc make php`
 * create a service class in `src\Services` that implements your generated interface
 
 ### Database
