@@ -1,5 +1,6 @@
 zolex_grpc:
     server:
+        enabled: true
         options:
             debug: true
     clients:

@@ -22,14 +22,11 @@ use Zolex\GrpcBundle\GRPC\ClientFactory;
 class ExampleClientPersistVehicleCommand extends Command
 {
     protected static $defaultName = 'client:example:persistVehicle';
-    private ClientFactory $clientFactory;
 
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct(private CommandClient $client)
     {
         parent::__construct(null);
-        $this->clientFactory = $clientFactory;
     }
-
 
     /**
      * Configure the command
@@ -55,15 +52,13 @@ class ExampleClientPersistVehicleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::persistVehicle()");
 
-        $client = $this->clientFactory->create(CommandClient::class);
-
         /** @var Vehicle $result */
         $args = (new Vehicle)
             ->setDealer((int)$input->getArgument('dealerId'))
             ->setMake($input->getArgument('make'))
             ->setModel($input->getArgument('model'))
             ->setType($input->getArgument('type'));
-        [$result, $status] = $client->persistVehicle($args)->wait();
+        [$result, $status] = $this->client->persistVehicle($args)->wait();
 
         switch ($status->code) {
             case StatusCode::OK:

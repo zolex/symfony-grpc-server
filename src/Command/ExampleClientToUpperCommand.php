@@ -23,12 +23,10 @@ use Zolex\GrpcBundle\GRPC\ClientFactory;
 class ExampleClientToUpperCommand extends Command
 {
     protected static $defaultName = 'client:example:toUpper';
-    private ClientFactory $clientFactory;
 
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct(private QueryClient $client)
     {
         parent::__construct(null);
-        $this->clientFactory = $clientFactory;
     }
 
     /**
@@ -52,11 +50,9 @@ class ExampleClientToUpperCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::toUpper('". $input->getArgument('string') ."')...");
 
-        $client = $this->clientFactory->create(QueryClient::class);
-
         /** @var ToUpperResult $result */
         $args = (new ToUpperArgs)->setString($input->getArgument('string'));
-        [$result, $status] = $client->toUpper($args)->wait();
+        [$result, $status] = $this->client->toUpper($args)->wait();
 
         switch ($status->code) {
             case StatusCode::OK:

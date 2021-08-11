@@ -23,12 +23,10 @@ use Zolex\GrpcBundle\GRPC\ClientFactory;
 class ExampleClientFindVehicleCommand extends Command
 {
     protected static $defaultName = 'client:example:findVehicle';
-    private \Zolex\GrpcBundle\GRPC\ClientFactory $clientFactory;
 
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct(private QueryClient $client)
     {
         parent::__construct(null);
-        $this->clientFactory = $clientFactory;
     }
 
     /**
@@ -52,11 +50,9 @@ class ExampleClientFindVehicleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::findVehicle()");
 
-        $client = $this->clientFactory->create(QueryClient::class);
-
         /** @var Vehicle $result */
         $args = (new VehicleFilter)->setId((int)$input->getArgument('id'));
-        [$result, $status] = $client->findVehicle($args)->wait();
+        [$result, $status] = $this->client->findVehicle($args)->wait();
 
         switch ($status->code) {
             case StatusCode::OK:

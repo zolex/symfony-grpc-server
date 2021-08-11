@@ -23,12 +23,10 @@ use Zolex\GrpcBundle\GRPC\ClientFactory;
 class OtherClientMultiplyCommand extends Command
 {
     protected static $defaultName = 'client:other:multiply';
-    private ClientFactory $clientFactory;
 
-    public function __construct(ClientFactory $clientFactory)
+    public function __construct(private QueryClient $client)
     {
         parent::__construct(null);
-        $this->clientFactory = $clientFactory;
     }
 
     /**
@@ -56,11 +54,9 @@ class OtherClientMultiplyCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->info("Calling client::multiply(". $a .", ". $b .")...");
 
-        $client = $this->clientFactory->create(QueryClient::class);
-
         /** @var MultiplyResult $result */
         $args = (new MultiplyArgs)->setA($a)->setB($b);
-        [$result, $status] = $client->multiply($args)->wait();
+        [$result, $status] = $this->client->multiply($args)->wait();
 
         switch ($status->code) {
             case StatusCode::OK:

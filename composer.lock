@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c403aabe6c3c8d61675288e0ea09473e",
+    "content-hash": "2754a7f26b27f30de499f788ff6b1fdd",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1294,16 +1294,16 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "d138f3ab5f761055cab1054070377cfd3222e368"
+                "reference": "4ce4712e6dc84a156176a0fbbb11954a25c93103"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/d138f3ab5f761055cab1054070377cfd3222e368",
-                "reference": "d138f3ab5f761055cab1054070377cfd3222e368",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/4ce4712e6dc84a156176a0fbbb11954a25c93103",
+                "reference": "4ce4712e6dc84a156176a0fbbb11954a25c93103",
                 "shasum": ""
             },
             "require": {
@@ -1375,9 +1375,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/2.2.1"
+                "source": "https://github.com/doctrine/persistence/tree/2.2.2"
             },
-            "time": "2021-05-19T07:07:01+00:00"
+            "time": "2021-08-10T19:01:29+00:00"
         },
         {
             "name": "doctrine/sql-formatter",
@@ -5247,16 +5247,16 @@
         },
         {
             "name": "zolex/grpc-bundle",
-            "version": "0.0.4",
+            "version": "0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zolex/GrpcBundle.git",
-                "reference": "aaf3065eb2f7e5cf4d165dddc35ba25167683b8b"
+                "reference": "2c3a40209b36269bd43ee6f319999f3160c12fba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zolex/GrpcBundle/zipball/aaf3065eb2f7e5cf4d165dddc35ba25167683b8b",
-                "reference": "aaf3065eb2f7e5cf4d165dddc35ba25167683b8b",
+                "url": "https://api.github.com/repos/zolex/GrpcBundle/zipball/2c3a40209b36269bd43ee6f319999f3160c12fba",
+                "reference": "2c3a40209b36269bd43ee6f319999f3160c12fba",
                 "shasum": ""
             },
             "require": {
@@ -5292,9 +5292,9 @@
             "description": "gRPC Bundle for Symfony",
             "support": {
                 "issues": "https://github.com/zolex/GrpcBundle/issues",
-                "source": "https://github.com/zolex/GrpcBundle/tree/0.0.4"
+                "source": "https://github.com/zolex/GrpcBundle/tree/0.0.5"
             },
-            "time": "2021-08-10T12:33:24+00:00"
+            "time": "2021-08-11T04:15:04+00:00"
         }
     ],
     "packages-dev": [

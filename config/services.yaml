@@ -7,6 +7,10 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Test,Kernel.php}'
 
+    Modix\Grpc\Service\:
+        resource: '../grpc-php/Modix/Grpc/Service/**/*Client.php'
+
+
     # remember to add sockets and json php extensions when enabling this...
     #Spiral\Goridge\SocketRelay:
     #    arguments: ['127.0.0.1', 6001]
