@@ -2,16 +2,12 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
 
-/bin/rr
-/rr/go.sum
+/.idea
 /grpc-php
 /grpc-web
 /config/tls
-/.idea
 /docker-compose.override.yaml

@@ -5,18 +5,16 @@ Everything is integreated with `symfony/framework-bundle` and `symfony/flex` so 
 
 ## Project Structure
 
-There are three pre-built docker images. `protoc` for generating php code, `server` to run it and optionally `client` to run the example client commands (If you like you can also build them yourself, but it takes some time. check docker-compose.yaml)
-
-The server's entrypoint is a minimal custom roadrunner binary, created from the sources in `/rr`.
+There are three pre-built docker images. `protoc` for generating php code, `server` to run it and optionally `client` to run the example client commands.
 
 Protocol Buffer Definitions are located in `/proto`. Generated PHP code will go in `/grpc-php` and must not be commited (It's already ignored).
 
 Roadrunner's gRPC plugin needs to know the proto files for all registered services. They are imported via `config/services.proto`.
 
-Spiral's gRPC PHP server and the gRPC services are automatically registered as symfony services in `config/services.yaml`.
-
 Roadrunner starts the worker in `bin/worker.php` which uses the symfony kernel to enable all the symfony features and serves spiral's gRPC worker.
 
+The gRPC clients are registered as symfony services in `config/services.yaml`(A one-liner for all generated clients).
+The clients are configured in the gRPC-bundle's `config/packages/zolex_grpc.yaml`.
 
 ## Run the examples
 

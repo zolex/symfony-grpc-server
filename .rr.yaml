@@ -12,7 +12,7 @@ grpc:
   #tls.key:  "config/tls/app.key"
   #tls.cert: "config/tls/app.crt"
   workers:
-    command: "php bin/worker.php"
+    command: "vendor/bin/grpc-worker"
     pool:
       numWorkers: 1
       maxJobs: 1
@@ -22,6 +22,6 @@ limit:
   services:
     grpc.maxMemory: 100
 
-debugger:
-  HistorySize: 2000
-  address: :8089
+#debugger:
+#  HistorySize: 2000
+#  address: :8089
