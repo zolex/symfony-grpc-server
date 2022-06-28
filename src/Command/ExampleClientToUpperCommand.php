@@ -8,22 +8,18 @@ use Modix\Grpc\Service\Example\v1\Model\StatusCode;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperArgs;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperResult;
 use Modix\Grpc\Service\Example\v1\QueryClient;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zolex\GrpcBundle\GRPC\ClientFactory;
 
-/**
- * Class ExampleClientCommand
- *
- * @package App
- */
+#[AsCommand(
+    name: "client:example:toUpper"
+)]
 class ExampleClientToUpperCommand extends Command
 {
-    protected static $defaultName = 'client:example:toUpper';
-
     public function __construct(private QueryClient $client)
     {
         parent::__construct(null);
@@ -59,7 +55,7 @@ class ExampleClientToUpperCommand extends Command
                 $io->success($result->getString());
                 return Command::SUCCESS;
             case StatusCode::EMPTY_STRING:
-                $io->error("The ExampleStatus::EMPTY was thrown: ". $status->details);
+                $io->error("The StatusCode::EMPTY_STRING was thrown: ". $status->details);
                 return Command::FAILURE;
             default:
                 print_r($status);

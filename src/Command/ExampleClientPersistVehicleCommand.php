@@ -6,23 +6,19 @@ namespace App\Command;
 
 use Modix\Grpc\Service\Example\v1\CommandClient;
 use Modix\Grpc\Service\Example\v1\Model\Vehicle;
-use Spiral\GRPC\StatusCode;
+use Spiral\RoadRunner\GRPC\StatusCode;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zolex\GrpcBundle\GRPC\ClientFactory;
 
-/**
- * Class ExampleClientPersistVehicleCommand
- *
- * @package App
- */
+#[AsCommand(
+    name: "client:example:persistVehicle"
+)]
 class ExampleClientPersistVehicleCommand extends Command
 {
-    protected static $defaultName = 'client:example:persistVehicle';
-
     public function __construct(private CommandClient $client)
     {
         parent::__construct(null);

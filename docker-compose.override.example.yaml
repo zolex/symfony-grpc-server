@@ -1,7 +1,0 @@
-version: '3'
-
-services:
-  server:
-    # see README.md - Composer section
-    volumes:
-      - ./vendor:/var/www/vendor

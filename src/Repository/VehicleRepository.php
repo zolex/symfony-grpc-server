@@ -30,7 +30,7 @@ class VehicleRepository extends ServiceEntityRepository
     public function findVehicle(VehicleFilter $filter): ?Vehicle
     {
         return $this->createQueryBuilder('vehicle')
-            ->innerJoin('vehicle.dealer', 'dealer')
+            ->leftJoin('vehicle.dealer', 'dealer')
             ->where('vehicle.id = :id')
             ->setParameter('id', $filter->getId())
             ->getQuery()

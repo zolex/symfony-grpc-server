@@ -12,7 +12,9 @@ use Modix\Grpc\Service\Example\v1\Model\ToUpperArgs;
 use Modix\Grpc\Service\Example\v1\Model\ToUpperResult;
 use Modix\Grpc\Service\Example\v1\QueryInterface;
 use Psr\Log\LoggerInterface;
-use Spiral\GRPC;
+use Spiral\RoadRunner\GRPC\ContextInterface;
+use Spiral\RoadRunner\GRPC\Exception\ServiceException;
+use Spiral\RoadRunner\GRPC\StatusCode as BaseStatusCode;
 
 /**
  * Class ExampleService
@@ -30,25 +32,25 @@ class QueryService implements QueryInterface
         $this->entityManager = $entityManager;
     }
 
-    public function toUpper(GRPC\ContextInterface $ctx, ToUpperArgs $in): ToUpperResult
+    public function toUpper(ContextInterface $ctx, ToUpperArgs $in): ToUpperResult
     {
         $this->logger->info("to upper was called, yeyyy");
 
         $string = $in->getString();
         if (empty($string)) {
-            throw new GRPC\Exception\ServiceException("The given string must not be empty", StatusCode::EMPTY_STRING);
+            throw new ServiceException("The given string must not be empty", StatusCode::EMPTY_STRING);
         }
 
         return (new ToUpperResult)->setString(strtoupper($string));
     }
 
-    public function findVehicle(GRPC\ContextInterface $ctx, Model\VehicleFilter $in): Model\Vehicle
+    public function findVehicle(ContextInterface $ctx, Model\VehicleFilter $in): Model\Vehicle
     {
+        $this->logger->debug(sprintf("findVehicle(%d)", $in->getId()));
+
         if (!$vehicle = $this->entityManager->getRepository(Vehicle::class)->findVehicle($in))
-            return new Model\Vehicle;
+            throw new ServiceException("Vehicle Not Found", BaseStatusCode::NOT_FOUND);
 
-        $this->entityManager->clear();
-
-        return $vehicle->getMessage();
+        return $vehicle->toRpcModel();
     }
 }

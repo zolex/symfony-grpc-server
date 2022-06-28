@@ -8,9 +8,10 @@ use App\Entity\Dealer;
 use App\Entity\Vehicle;
 use Doctrine\ORM\EntityManagerInterface;
 use Modix\Grpc\Service\Example\v1\CommandInterface;
-use Modix\Grpc\Service\Example\v1\Model\Vehicle as VehicleMessage;
+use Modix\Grpc\Service\Example\v1\Model;
 use Psr\Log\LoggerInterface;
 use Spiral\GRPC;
+use Spiral\RoadRunner\GRPC\ContextInterface;
 
 /**
  * Class ExampleService
@@ -28,7 +29,7 @@ class CommandService implements CommandInterface
         $this->entityManager = $entityManager;
     }
 
-    public function persistVehicle(GRPC\ContextInterface $ctx, VehicleMessage $in): VehicleMessage
+    public function persistVehicle(ContextInterface $ctx, Model\Vehicle $in): Model\Vehicle
     {
         $vehicle = new Vehicle();
         $vehicle->setMake($in->getMake());
@@ -41,14 +42,6 @@ class CommandService implements CommandInterface
         $this->entityManager->persist($vehicle);
         $this->entityManager->flush();
 
-        $out = new VehicleMessage();
-        $out->setId($vehicle->getId());
-        $out->setMake($vehicle->getMake());
-        $out->setModel($vehicle->getModel());
-        $out->setType($vehicle->getType());
-        if ($dealer = $vehicle->getDealer())
-            $out->setDealer($dealer->getId());
-
-        return $out;
+        return $vehicle->toRpcModel();
     }
 }

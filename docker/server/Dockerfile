@@ -1,11 +1,11 @@
-FROM zolex/grpc-php-server:0.0.2
+FROM zolex/grpc-php-server:0.0.3
 
 RUN apk add --no-cache \
     file \
     gettext \
     git
 
-ARG APCU_VERSION="5.1.19"
+ARG APCU_VERSION="5.1.21"
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -39,16 +39,4 @@ RUN apk add --no-cache --virtual .build-deps \
 
 WORKDIR /var/www
 
-COPY .env .env
-COPY .rr.yaml .rr.yaml
-COPY bin/console bin/console
-COPY composer.json composer.json
-COPY composer.lock composer.lock
-COPY grpc-php grpc-php
-COPY migrations migrations
-COPY proto proto
-COPY symfony.lock symfony.lock
-COPY src src
-COPY config config
-
-RUN composer install
+CMD ["rr", "serve"]

@@ -10,4 +10,3 @@
 /grpc-php
 /grpc-web
 /config/tls
-/docker-compose.override.yaml

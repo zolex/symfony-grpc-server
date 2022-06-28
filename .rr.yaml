@@ -1,27 +1,27 @@
-#rpc:
-#  enable: true
-#  listen: tcp://127.0.0.1:6001
+version: "2.7"
 
-metric:
-  enable: false
+server:
+  command: "vendor/bin/grpc-worker"
 
-# grpc service configuration.
 grpc:
-  listen: tcp://0.0.0.0:3886
-  proto: "proto/services.proto"
-  #tls.key:  "config/tls/app.key"
-  #tls.cert: "config/tls/app.crt"
-  workers:
-    command: "vendor/bin/grpc-worker"
-    pool:
-      numWorkers: 1
-      maxJobs: 1
+  # GRPC address to listen
+  #
+  # This option is required
+  listen: "tcp://0.0.0.0:3886"
 
-# control the max memory usage
-limit:
-  services:
-    grpc.maxMemory: 100
+  # Proto files to use [Multiply files since RR v2.6.0]
+  #
+  # This option is required. At least one proto file must be specified.
+  proto:
+    - "proto/services.proto"
 
-#debugger:
-#  HistorySize: 2000
-#  address: :8089
+  # After having pinged for keepalive check, the server waits for a duration
+  # of Timeout and if no activity is seen even after that the connection is
+  # closed.
+  #
+  # This option is optional. Default value: 20s
+  timeout: 20s
+
+  # Usual workers pool configuration
+  pool:
+    num_workers: 1

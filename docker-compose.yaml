@@ -2,7 +2,7 @@ version: '3'
 
 services:
   protoc:
-    image: zolex/protoc-grpc:0.0.2
+    image: zolex/protoc-grpc:0.0.3
     working_dir: /var/www
     volumes:
       - .:/var/www
@@ -11,28 +11,19 @@ services:
     build:
       dockerfile: docker/server/Dockerfile
       context: .
+    #command: sh -c "composer dump-autoload && rr serve"
     working_dir: /var/www
     volumes:
-      - ./docker/server/dev/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-      - ./.env:/var/www/.env
-      - ./.rr.yaml:/var/www/.rr.yaml
-      - ./bin:/var/www/bin
-      - ./composer.json:/var/www/composer.json
-      - ./composer.lock:/var/www/composer.lock
-      - ./config:/var/www/config
-      - ./grpc-php:/var/www/grpc-php
-      - ./migrations:/var/www/migrations
-      - ./proto:/var/www/proto
-      - ./src:/var/www/src
-      - ./symfony.lock:/var/www/symfony.lock
-      - ./var:/var/www/var:delegated
+      #- ./docker/server/dev/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - .:/var/www
     ports:
       - 3886:3886
     networks:
       - app_network
 
   client:
-    image: zolex/grpc-php-client:0.0.1
+    image: zolex/grpc-php-server:0.0.3
+    entrypoint: "ash"
     command: -exec "while true; do sleep 1000; done"
     working_dir: /var/www
     volumes:
@@ -53,28 +44,7 @@ services:
       MYSQL_PASSWORD: grpc
     networks:
       - app_network
-  envoy:
-    build:
-      dockerfile: docker/envoy/Dockerfile
-      context: .
-    ports:
-      - '9901:9901'
-      - '8080:8080'
-    networks:
-      - app_network
-  grpcui:
-    build:
-      dockerfile: docker/grpcui/Dockerfile
-      context: .
-    command: /root/go/bin/grpcui -plaintext -import-path /var/proto/ -proto services.proto -bind 0.0.0.0 -port 1337 server:3886
-    ports:
-      - '1337:1337'
-    volumes:
-      - ./proto:/var/proto
-    depends_on:
-      - server
-    networks:
-      - app_network
+
 networks:
   app_network:
     driver: bridge

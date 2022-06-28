@@ -9,9 +9,3 @@ monolog:
             type: service
             id: zolex.grpc.logger.handler
             channels: ["!event"]
-
-        # requires the GoridgeRpcHandler to be configured as a service
-        #rpc:
-        #    type: service
-        #    id: Zolex\GrpcBundle\Logger\GoridgeRpcHandler
-        #    channels: ["!event"]

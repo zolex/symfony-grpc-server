@@ -7,23 +7,19 @@ namespace App\Command;
 use Modix\Grpc\Service\Example\v1\Model\Vehicle;
 use Modix\Grpc\Service\Example\v1\Model\VehicleFilter;
 use Modix\Grpc\Service\Example\v1\QueryClient;
-use Spiral\GRPC\StatusCode;
+use Spiral\RoadRunner\GRPC\StatusCode;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zolex\GrpcBundle\GRPC\ClientFactory;
 
-/**
- * Class ExampleClientFindVehicleCommand
- *
- * @package App
- */
+#[AsCommand(
+    name: "client:example:findVehicle"
+)]
 class ExampleClientFindVehicleCommand extends Command
 {
-    protected static $defaultName = 'client:example:findVehicle';
-
     public function __construct(private QueryClient $client)
     {
         parent::__construct(null);
@@ -58,6 +54,9 @@ class ExampleClientFindVehicleCommand extends Command
             case StatusCode::OK:
                 $io->success(sprintf("found vehicle ID: %d, Make: %s, Model: %s, Type: %d, Dealer ID: %d", $result->getId(), $result->getMake(), $result->getModel(), $result->getType(), $result->getDealer()));
                 return Command::SUCCESS;
+            case StatusCode::NOT_FOUND:
+                $io->error(sprintf("NOT_FOUND: %s", $status->details));
+                return Command::FAILURE;
             default:
                 print_r($status);
                 $io->error(sprintf("Other Error: %s (Code: %d)", $status->details, $status->code));

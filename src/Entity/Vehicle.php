@@ -79,14 +79,14 @@ class Vehicle
         return $this;
     }
 
-    public function getMessage(): \Modix\Grpc\Service\Example\v1\Model\Vehicle
+    public function toRpcModel(): \Modix\Grpc\Service\Example\v1\Model\Vehicle
     {
         return new \Modix\Grpc\Service\Example\v1\Model\Vehicle([
-            'id' => $this->getId(),
+            'id' => (int)$this->getId(),
             'model' => $this->getModel(),
             'make' => $this->getMake(),
             'type' => $this->getType(),
-            'dealer' => $this->getDealer()?->getId(),
+            'dealer' => (int)$this->getDealer()?->getId(),
         ]);
     }
 }

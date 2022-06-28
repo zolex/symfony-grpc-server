@@ -7,23 +7,19 @@ namespace App\Command;
 use Modix\Grpc\Service\Other\v1\Model\MultiplyArgs;
 use Modix\Grpc\Service\Other\v1\Model\MultiplyResult;
 use Modix\Grpc\Service\Other\v1\QueryClient;
-use Spiral\GRPC\StatusCode;
+use Spiral\RoadRunner\GRPC\StatusCode;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zolex\GrpcBundle\GRPC\ClientFactory;
 
-/**
- * Class OtherClientMultiplyCommand
- *
- * @package App\Command
- */
+#[AsCommand(
+    name: "client:other:multiply"
+)]
 class OtherClientMultiplyCommand extends Command
 {
-    protected static $defaultName = 'client:other:multiply';
-
     public function __construct(private QueryClient $client)
     {
         parent::__construct(null);
@@ -60,7 +56,7 @@ class OtherClientMultiplyCommand extends Command
 
         switch ($status->code) {
             case StatusCode::OK:
-                $io->success($result->getResult());
+                $io->success(sprintf("Result: %d", $result->getResult()));
                 return Command::SUCCESS;
             default:
                 $io->error(print_r($status, true));
